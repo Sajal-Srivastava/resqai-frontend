@@ -1,38 +1,178 @@
-.App {
+/* ==========================
+   🌈 App.css - ResQ.AI Styling (Dark Gradient + Emergency Orange)
+   ========================== */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #f5f5f5;
+}
+
+.app {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #1c1c1c;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
+}
+
+h1 {
   text-align: center;
+  color: #ff5722;
+  margin-bottom: 1.5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #ffab91;
+  border-radius: 12px;
+  resize: none;
+  margin-bottom: 1rem;
+  background: #2d2d2d;
+  color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.controls button {
+  margin: 0.5rem 0.3rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: #ff5722;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.controls button:hover {
+  background: #e64a19;
+}
+
+.sos-button {
+  background: #ff1744;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(255, 23, 68, 0.5);
+}
+
+.result {
+  background: #2b1b1b;
+  border: 1px solid #ffccbc;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+.tips {
+  margin-top: 2rem;
+  background: #263238;
+  border: 1px solid #455a64;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.tips ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tips li {
+  margin: 0.5rem 0;
+}
+
+.common-emergencies {
+  margin-top: 2rem;
+  text-align: center;
+  color: #eee;
+}
+
+.emergency-buttons {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.emergency-buttons button {
+  background: #3e2723;
+  border: 1px solid #ffab91;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  min-width: 180px;
+  color: #ffccbc;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.emergency-buttons button:hover {
+  background: #ff5722;
+  color: white;
+  border-color: #ff7043;
+}
+
+.note-box {
+  margin-top: 1rem;
+  background: #212121;
+  border: 1px solid #ffa000;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #ffe082;
+}
+
+.note-box strong {
+  display: block;
+  color: #ffca28;
+  margin-bottom: 0.3rem;
+}
+
+.controls spaced-controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 200px;
+
+}
+
+
+.emergency-contact {
+  margin-top: 1rem;
+  background: #1c1c1c;
+  padding: 1rem;
+  border-radius: 10px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.emergency-contact input {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.emergency-contact button {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.guidance-box {
+  background: #1f1f1f;
+  border-left: 5px solid #ff6600;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
+  color: #ffffff;
+}
+.result h2 {
+  color: #ff6600;
 }
