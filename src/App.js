@@ -1,127 +1,47 @@
-// ==========================
-// 📁 REFACTORED APP STRUCTURE
-// ==========================
-import React, { useState } from 'react';
-import EmergencyTips from './components/EmergencyTips';
-import EmergencyForm from './components/EmergencyForm';
-import CommonEmergencies from './components/CommonEmergencies';
-import EmergencyResult from './components/EmergencyResult';
-import EmergencyMap from './components/EmergencyMap';
-import './App.css';
-import './Animations.css';
+import React from 'react';
+import { AppProvider, useApp } from './context/AppContext';
+import Header from './components/layout/Header';
+import NavBar from './components/layout/NavBar';
+import ToastContainer from './components/common/Toast';
+import HomeScreen from './screens/HomeScreen';
+import SOSScreen from './screens/SOSScreen';
+import ResultScreen from './screens/ResultScreen';
+import MedicalProfileScreen from './screens/MedicalProfileScreen';
+import ContactsScreen from './screens/ContactsScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import NearbyServicesScreen from './screens/NearbyServicesScreen';
+
+function AppShell() {
+  const { state } = useApp();
+  const renderScreen = () => {
+    switch (state.screen) {
+      case 'home':     return <HomeScreen />;
+      case 'sos':      return <SOSScreen />;
+      case 'result':   return <ResultScreen />;
+      case 'map':      return <NearbyServicesScreen />;
+      case 'profile':  return <MedicalProfileScreen />;
+      case 'contacts': return <ContactsScreen />;
+      case 'settings': return <SettingsScreen />;
+      default:         return <HomeScreen />;
+    }
+  };
+  return (
+    <div className="app-shell">
+      <Header />
+      <main className="app-content" key={state.screen}>
+        {renderScreen()}
+      </main>
+      <NavBar />
+      <ToastContainer />
+    </div>
+  );
+}
 
 function App() {
-  const [text, setText] = useState('');
-  const [result, setResult] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleAnalyze = async () => {
-    if (!text.trim()) return;
-
-    let userLocation = location;
-    if (!userLocation) {
-      try {
-        const pos = await new Promise((resolve, reject) =>
-          navigator.geolocation.getCurrentPosition(resolve, reject)
-        );
-        userLocation = {
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-        };
-        setLocation(userLocation);
-      } catch (err) {
-        console.error('Geolocation error:', err);
-        userLocation = null;
-      }
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch('https://resqai-backend.onrender.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, location: userLocation }),
-      });
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      console.error(err);
-    }
-    setLoading(false);
-  };
-
-  const handleVoice = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert('Voice recognition not supported');
-      return;
-    }
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setText(transcript);
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error', event);
-    };
-
-    recognition.start();
-  };
-
-  const handleSOS = () => {
-  const msg = `🚨 SOS Triggered! Need help at my location. (DEMO)`;
-  alert(msg);
-};
-
-
-
-  const commonEmergency = (type) => {
-    setText(type);
-    handleAnalyze();
-  };
-
   return (
-    <div className="app">
-      <h1>🚨 ResQ.AI</h1>
-
-      
-
-      <EmergencyForm
-        text={text}
-        setText={setText}
-        onAnalyze={handleAnalyze}
-        onVoice={handleVoice}
-        onSOS={handleSOS}
-        loading={loading}
-      />
-
-
-
-       {/* {result && <EmergencyResult result={result} />} */}
-       {result?.locationReceived && location && (
-          <>
-            <EmergencyMap location={location} />
-            <EmergencyResult result={result} />
-          </>
-        )}
-
-
-
-      <CommonEmergencies onSelect={commonEmergency} />
-
-      <div className="note-box">
-        <strong>⚠️ For immediate life-threatening emergencies, call 112 directly.</strong>
-        <p>This tool provides guidance but doesn't replace emergency services.</p>
-      </div>
-
-     
-      <EmergencyTips />
-    </div>
+    <AppProvider>
+      <AppShell />
+    </AppProvider>
   );
 }
 
